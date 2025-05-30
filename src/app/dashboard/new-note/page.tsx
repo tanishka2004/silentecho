@@ -12,7 +12,7 @@ import { useNotes } from '@/hooks/useNotes';
 import { useToast } from '@/hooks/use-toast';
 import { useAppContext } from '@/context/AppContext';
 import type { Mood } from '@/lib/constants';
-import { MOOD_OPTIONS } // Import default mood if needed
+import { MOOD_OPTIONS } from '@/lib/constants'; // Import default mood if needed
 import { ArrowLeft, Send, Sparkles, XCircle } from 'lucide-react';
 
 export default function NewNotePage() {
