@@ -4,13 +4,13 @@
 
 @layer base {
   :root {
-    --background: 60 100% 91%; /* PRD: Light cream (#FFFFD1) */
+    --background: 60 55% 96%; /* Softer, very pale cream */
     --foreground: 20 10% 20%; /* Dark Grey for readability */
 
-    --card: 60 70% 97%; /* Lighter Cream */
+    --card: 60 45% 98%; /* Even lighter, very subtle cream */
     --card-foreground: 20 10% 20%;
 
-    --popover: 60 70% 97%;
+    --popover: 60 45% 98%; /* Mirroring card */
     --popover-foreground: 20 10% 20%;
 
     --primary: 335 75% 70%; /* Soft, premium Pink */
@@ -19,7 +19,7 @@
     --secondary: 270 56% 90%; /* Lighter PRD Lavender for secondary elements */
     --secondary-foreground: 270 40% 30%; /* Darker Lavender */
 
-    --muted: 60 50% 88%; /* Muted Cream */
+    --muted: 60 30% 92%; /* Softer muted cream/beige */
     --muted-foreground: 60 30% 50%; /* Greyish Cream */
 
     --accent: 270 56% 83%; /* PRD: Lavender (#D3C0EB) as Accent */
@@ -28,8 +28,8 @@
     --destructive: 0 70% 60%; /* Standard Red */
     --destructive-foreground: 0 0% 100%;
 
-    --border: 60 40% 85%; /* Light Cream border */
-    --input: 60 60% 94%; /* Light Cream input */
+    --border: 60 25% 90%; /* Very light, desaturated border */
+    --input: 60 35% 97%; /* Very light, desaturated input background */
     --ring: 335 75% 75%; /* Primary Pink for Ring */
 
     --radius: 1rem; /* Increased border radius for softer corners */
