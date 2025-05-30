@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useState } from 'react';
@@ -6,7 +7,7 @@ import { useNotes } from '@/hooks/useNotes';
 import type { Note } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, CalendarDays, Edit, HeartCrack, Thermometer, Trash2 } from 'lucide-react';
+import { ArrowLeft, CalendarDays, Edit, HeartCrack, Send, Thermometer, Trash2 } from 'lucide-react'; // Added Send
 import { format, parseISO } from 'date-fns';
 import Link from 'next/link';
 import {
@@ -21,6 +22,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useToast } from '@/hooks/use-toast';
+import { useAppContext } from '@/context/AppContext'; // Added for recipientEmail
 
 export default function NoteDetailPage() {
   const router = useRouter();
@@ -29,7 +31,7 @@ export default function NoteDetailPage() {
   const [note, setNote] = useState<Note | null | undefined>(undefined); // undefined for loading, null for not found
   const { toast } = useToast();
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-
+  const { recipientEmail } = useAppContext(); // Get recipientEmail
 
   const noteId = typeof params.id === 'string' ? params.id : undefined;
 
@@ -48,6 +50,33 @@ export default function NoteDetailPage() {
     }
     setShowDeleteConfirm(false);
   };
+
+  const handleSubmitGrievance = () => {
+    if (!note) return;
+
+    const subject = `[SilentEcho Grievance] ${note.title}`;
+    const emailBody = `
+Date: ${format(parseISO(note.createdAt), "EEEE, MMMM d, yyyy 'at' h:mm a")}
+Mood: ${note.mood.emoji} (${note.mood.descriptor})
+Intensity: ${note.intensity}/10
+
+Grievance Details:
+${note.content}
+    `;
+    const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+    
+    try {
+      window.location.href = mailtoLink;
+      toast({ 
+        title: 'Email Client Opened', 
+        description: 'Please send your grievance from your email client.',
+      });
+    } catch (e) {
+       console.error("Failed to open mailto link", e);
+       toast({ title: 'Error Opening Email Client', description: 'Could not open email client. Please try copying the details manually.', variant: 'destructive' });
+    }
+  };
+
 
   if (notesLoading || note === undefined) {
     return <div className="text-center py-10 text-muted-foreground">Loading note details...</div>;
@@ -99,10 +128,9 @@ export default function NoteDetailPage() {
           </div>
         </CardContent>
         <CardFooter className="flex flex-col sm:flex-row justify-end gap-3 border-t pt-4">
-          {/* Edit functionality can be added later. For now, link to new note or placeholder */}
           <Button variant="outline" asChild className="w-full sm:w-auto tap-scale">
-             <Link href={`/dashboard/edit-note/${note.id}`}> {/* Placeholder for edit route */}
-                <Edit className="mr-2 h-4 w-4" /> Edit (Coming Soon)
+             <Link href={`/dashboard/edit-note/${note.id}`}>
+                <Edit className="mr-2 h-4 w-4" /> Edit
              </Link>
           </Button>
           <AlertDialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
@@ -126,6 +154,9 @@ export default function NoteDetailPage() {
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
+          <Button onClick={handleSubmitGrievance} className="w-full sm:w-auto tap-scale bg-primary text-primary-foreground hover:bg-primary/90">
+            <Send className="mr-2 h-4 w-4" /> Submit Grievance
+          </Button>
         </CardFooter>
       </Card>
     </div>

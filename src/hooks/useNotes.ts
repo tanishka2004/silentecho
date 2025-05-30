@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect, useCallback } from 'react';
@@ -29,17 +30,18 @@ export function useNotes() {
     }
   }, []);
 
-  const addNote = useCallback((newNote: Omit<Note, 'id' | 'createdAt'>) => {
+  const addNote = useCallback((newNote: Omit<Note, 'id' | 'createdAt'>): string => {
+    const noteWithIdAndDate: Note = {
+      ...newNote,
+      id: Date.now().toString(), // Simple unique ID
+      createdAt: new Date().toISOString(),
+    };
     setNotes(prevNotes => {
-      const noteWithIdAndDate: Note = {
-        ...newNote,
-        id: Date.now().toString(), // Simple unique ID
-        createdAt: new Date().toISOString(),
-      };
       const updatedNotes = [noteWithIdAndDate, ...prevNotes];
       saveNotesToLocalStorage(updatedNotes);
       return updatedNotes;
     });
+    return noteWithIdAndDate.id; // Return the new ID
   }, [saveNotesToLocalStorage]);
 
   const getNoteById = useCallback((id: string): Note | undefined => {

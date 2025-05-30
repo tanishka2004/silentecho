@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -10,10 +11,9 @@ import { MoodSelector } from '@/components/notes/MoodSelector';
 import { IntensitySlider } from '@/components/notes/IntensitySlider';
 import { useNotes } from '@/hooks/useNotes';
 import { useToast } from '@/hooks/use-toast';
-import { useAppContext } from '@/context/AppContext';
 import type { Mood } from '@/lib/constants';
-import { MOOD_OPTIONS } from '@/lib/constants'; // Import default mood if needed
-import { ArrowLeft, Send, Sparkles, XCircle } from 'lucide-react';
+import { MOOD_OPTIONS } from '@/lib/constants';
+import { ArrowLeft, Save, XCircle } from 'lucide-react'; // Changed Send to Save
 
 export default function NewNotePage() {
   const [title, setTitle] = useState('');
@@ -24,9 +24,8 @@ export default function NewNotePage() {
   const router = useRouter();
   const { addNote } = useNotes();
   const { toast } = useToast();
-  const { recipientEmail } = useAppContext();
 
-  const handleSaveAndEmail = () => {
+  const handleReviewAndSave = () => {
     if (!title.trim()) {
       toast({ title: 'Title Missing', description: 'Please enter a title for your note.', variant: 'destructive' });
       return;
@@ -41,33 +40,16 @@ export default function NewNotePage() {
     }
 
     const noteData = { title, content, mood: selectedMood, intensity };
-    addNote(noteData);
+    const newNoteId = addNote(noteData);
 
-    const subject = `[Heart-to-Heart] ${title}`;
-    const emailBody = `
-Date: ${new Date().toLocaleString()}
-Mood: ${selectedMood.emoji} (${selectedMood.descriptor})
-Intensity: ${intensity}/10
-
-Message:
-${content}
-    `;
-
-    // Using mailto link for "zero-backend" email dispatch
-    const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
-    
-    try {
-      window.location.href = mailtoLink; // This will open the default email client
+    if (newNoteId) {
       toast({ 
-        title: 'Note Saved & Email Ready!', 
-        description: 'Your note is saved. Please send the pre-filled email from your mail client.',
-        action: <Sparkles className="text-accent" />,
+        title: 'Note Saved!', 
+        description: 'Review your note before submitting the grievance.',
       });
-      router.push('/dashboard/history');
-    } catch (e) {
-       console.error("Failed to open mailto link", e);
-       toast({ title: 'Note Saved!', description: 'Your note has been saved locally. Could not open email client.', variant: 'default' });
-       router.push('/dashboard/history');
+      router.push(`/dashboard/history/${newNoteId}`);
+    } else {
+      toast({ title: 'Error Saving Note', description: 'Could not save the note. Please try again.', variant: 'destructive' });
     }
   };
 
@@ -82,25 +64,25 @@ ${content}
       </Button>
       <Card className="shadow-soft-lg">
         <CardHeader>
-          <CardTitle className="text-3xl font-heading">New Heartfelt Note</CardTitle>
+          <CardTitle className="text-3xl font-heading">New Heartfelt Grievance</CardTitle>
           <CardDescription>Pour out your thoughts and feelings. They matter.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div>
-            <label htmlFor="title" className="block text-sm font-medium text-foreground mb-1">What’s on your heart?</label>
+            <label htmlFor="title" className="block text-sm font-medium text-foreground mb-1">Subject of your grievance?</label>
             <Input
               id="title"
-              placeholder="A thought, a feeling, a moment..."
+              placeholder="A brief title for your concern..."
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="text-lg"
             />
           </div>
           <div>
-            <label htmlFor="content" className="block text-sm font-medium text-foreground mb-1">Your message...</label>
+            <label htmlFor="content" className="block text-sm font-medium text-foreground mb-1">Details of your grievance...</label>
             <Textarea
               id="content"
-              placeholder="Let your words flow freely..."
+              placeholder="Describe your grievance in detail..."
               value={content}
               onChange={(e) => setContent(e.target.value)}
               rows={8}
@@ -114,8 +96,8 @@ ${content}
           <Button variant="outline" onClick={handleCancel} className="w-full sm:w-auto tap-scale">
             <XCircle className="mr-2 h-4 w-4" /> Cancel
           </Button>
-          <Button onClick={handleSaveAndEmail} className="w-full sm:w-auto tap-scale">
-            <Send className="mr-2 h-4 w-4" /> Save & Prepare Email
+          <Button onClick={handleReviewAndSave} className="w-full sm:w-auto tap-scale">
+            <Save className="mr-2 h-4 w-4" /> Review & Save
           </Button>
         </CardFooter>
       </Card>
