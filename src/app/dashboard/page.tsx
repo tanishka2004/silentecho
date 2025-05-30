@@ -1,11 +1,13 @@
+
 "use client";
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Feather, Edit3, History } from 'lucide-react';
+import { Feather, Edit3, History, Sparkle } from 'lucide-react';
 import { APP_NAME } from '@/lib/constants';
 import Image from 'next/image';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export default function DashboardPage() {
   return (
@@ -47,12 +49,13 @@ export default function DashboardPage() {
         </CardContent>
       </Card>
 
-      <div className="text-center p-6 rounded-lg bg-accent/20 border border-accent/50">
-          <h3 className="text-xl font-heading text-accent-foreground mb-2">A Little Reminder</h3>
-          <p className="text-accent-foreground/80">
-            This journal is for you. Feel free to write about anything on your mind. Your thoughts are valued and safe here.
-          </p>
-      </div>
+      <Alert className="shadow-soft border-primary/30">
+        <Sparkle className="h-5 w-5 text-primary" />
+        <AlertTitle className="font-heading text-lg text-primary">A Little Reminder</AlertTitle>
+        <AlertDescription className="text-muted-foreground">
+          This journal is for you. Feel free to write about anything on your mind. Your thoughts are valued and safe here.
+        </AlertDescription>
+      </Alert>
     </div>
   );
 }
