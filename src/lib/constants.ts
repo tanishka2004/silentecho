@@ -1,3 +1,4 @@
+
 export const PASSCODE_KEY = 'silentEchoPasscode';
 export const AUTH_STATUS_KEY = 'silentEchoAuthStatus';
 export const NOTES_KEY = 'silentEchoNotes';
@@ -10,18 +11,35 @@ export type Mood = {
 };
 
 export const MOOD_OPTIONS: Mood[] = [
-  { emoji: '😊', descriptor: 'Happy' },
-  { emoji: '😢', descriptor: 'Sad' },
-  { emoji: '😡', descriptor: 'Angry' },
-  { emoji: '😰', descriptor: 'Anxious' },
-  { emoji: '😌', descriptor: 'Calm' },
-  { emoji: '💖', descriptor: 'Loved' },
-  { emoji: '😴', descriptor: 'Tired' },
-  { emoji: '🤯', descriptor: 'Overwhelmed' },
-  { emoji: '😍', descriptor: 'Excited' },
-  { emoji: '😭', descriptor: 'Devastated' },
   { emoji: '🤔', descriptor: 'Pondering' },
-  { emoji: '🥳', descriptor: 'Celebratory' },
+  { emoji: '😔', descriptor: 'Sad' }, // Changed from 😢 for variety
+  { emoji: '😠', descriptor: 'Angry' }, // Changed from 😡 for variety
+  { emoji: '😰', descriptor: 'Anxious' },
+  { emoji: '😟', descriptor: 'Worried' },
+  { emoji: '😫', descriptor: 'Stressed' },
+  { emoji: '😤', descriptor: 'Frustrated' },
+  { emoji: '😒', descriptor: 'Annoyed' },
+  { emoji: '😑', descriptor: 'Irritated' },
+  { emoji: '😞', descriptor: 'Disappointed' },
+  { emoji: '😖', descriptor: 'Miserable' },
+  { emoji: '😩', descriptor: 'Exhausted' },
+  { emoji: '🤯', descriptor: 'Overwhelmed' },
+  { emoji: '😭', descriptor: 'Devastated' },
+  { emoji: '💔', descriptor: 'Heartbroken' },
+  { emoji: '🙁', descriptor: 'Lonely' },
+  { emoji: '😬', descriptor: 'Uneasy' },
+  { emoji: '😕', descriptor: 'Confused' },
+  { emoji: '😶', descriptor: 'Numb' },
+  { emoji: '🤐', descriptor: 'Silenced' },
+  { emoji: '🥺', descriptor: 'Vulnerable' },
+  { emoji: '🤨', descriptor: 'Skeptical' },
+  { emoji: '🙄', descriptor: 'Exasperated' },
+  { emoji: '🤢', descriptor: 'Disgusted' },
+  { emoji: '😣', descriptor: 'Resentful' }, // Using 😣 for Resentful
+  { emoji: '😥', descriptor: 'Regretful' }, // Added Regretful
+  { emoji: '😌', descriptor: 'Calm' },
+  { emoji: '😊', descriptor: 'Okay' }, // More neutral than Happy
+  { emoji: '😴', descriptor: 'Tired' },
 ];
 
 export const APP_NAME = "SilentEcho";
