@@ -17,7 +17,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useState }_ from 'react'; // For managing AlertDialog state.
+import { useState } from 'react'; // For managing AlertDialog state.
 
 export default function HistoryPage() {
   const { notes, deleteNote, isLoading } = useNotes();
