@@ -24,7 +24,7 @@ export default function DashboardPage() {
         </CardHeader>
         <CardContent className="p-8 text-center">
           <Image 
-            src="https://placehold.co/600x300.png" 
+            src="/assests/pexels-pixabay-80453.jpg" 
             alt="Pastel illustration" 
             width={600} 
             height={300} 

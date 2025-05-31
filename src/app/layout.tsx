@@ -18,8 +18,8 @@ const openSans = Open_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'SilentEcho - Your Personal Grievance Portal',
-  description: 'A safe place to share anything, with automated email dispatch.',
+  title: 'Gunnu Grievance Portal',
+  description: 'A safe place to share anything.',
 };
 
 export default function RootLayout({
